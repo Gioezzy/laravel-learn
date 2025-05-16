@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\mahasiswa\MahasiswaController;
@@ -9,6 +10,10 @@ use App\Http\Controllers\Dosen\DosenController;
 use App\Http\Controllers\Dosen\DosenpnpController;
 use App\Http\Controllers\Dosen\DosentiController;
 use App\Http\Controllers\Pengguna\PenggunaController;
+use App\Http\Controllers\ProfileController;
+
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,10 +24,10 @@ Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
 
 Route::view('/helo', 'helo', ["name" => "Qalbi"]);
 
-Route::get('/profile', function () {
-    echo '<h1>Profile</h1>';
-    return '<p>Profile page</p>';
-});
+// Route::get('/profile', function () {
+//     echo '<h1>Profile</h1>';
+//     return '<p>Profile page</p>';
+// });
 
 Route::get('/listmahasiswa', function () {
     $arrmhs = [
@@ -240,9 +245,21 @@ Route::put('/dosenti/{id}', [DosentiController::class,'update'])->name('dosenti.
 Route::delete('/dosenti/{id}', [DosentiController::class,'destroy'])->name('dosenti.destroy');
 
 
-Route::get('/pengguna/create', [PenggunaController::class, 'create'])->name('penggunas.create');
-Route::post('/pengguna', [PenggunaController::class, 'store'])->name('penggunas.store');
-Route::get('/pengguna', [PenggunaController::class, 'index'])->name('penggunas.index');
-Route::get('/pengguna/{id}/edit', [PenggunaController::class, 'edit'])->name('penggunas.edit');
-Route::put('/pengguna/{id}', [PenggunaController::class, 'update'])->name('penggunas.update');
-Route::delete('/pengguna/{id}', [PenggunaController::class, 'destroy'])->name('penggunas.destroy');
+// Route::get('/pengguna/create', [PenggunaController::class, 'create'])->name('penggunas.create');
+// Route::post('/pengguna', [PenggunaController::class, 'store'])->name('penggunas.store');
+// Route::get('/pengguna', [PenggunaController::class, 'index'])->name('penggunas.index');
+// Route::get('/pengguna/{id}/edit', [PenggunaController::class, 'edit'])->name('penggunas.edit');
+// Route::put('/pengguna/{id}', [PenggunaController::class, 'update'])->name('penggunas.update');
+// Route::delete('/pengguna/{id}', [PenggunaController::class, 'destroy'])->name('penggunas.destroy');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::resource('penggunas', PenggunaController::class);
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
