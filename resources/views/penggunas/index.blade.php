@@ -29,10 +29,10 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone }}</td>
                     <td>
-                        @if ($user->file)
-                            <a href="{{ asset('storage/' . $user->file) }}" target="_blank">Lihat File</a>
+                        @if ($user->file_upload)
+                            <img src="{{ asset('storage/' . $user->file_upload) }}?t={{ time() }}" alt="Foto pengguna" style="width: 200px; height: auto;">
                         @else
-                            Tidak ada file
+                            <span style="color: red">Tidak ada photo</span>
                         @endif
                     </td>
                     <td>

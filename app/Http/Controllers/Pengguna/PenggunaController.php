@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Pengguna\PenggunaStoreRequest;
 use App\Http\Requests\Pengguna\PenggunaUpdateRequest;
 use App\Models\Pengguna;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -50,7 +51,7 @@ class PenggunaController extends Controller
         $penggunas['password'] = Hash::make($penggunas['password']);
         if($request->hasFile('file_upload')){
             $file = $request->file('file_upload');
-            $filename = time(). '_'.$file->getClientOriginalName();
+            $filename = time().'_'.$file->getClientOriginalName();
             $path = $file->storeAs('uploads', $filename, 'public');
             $penggunas['file_upload'] = $path;
         }
@@ -93,9 +94,18 @@ class PenggunaController extends Controller
         //     'password' => $request->password,
         //     'phone' => $request->phone
         // ]);
+        $pengguna = Pengguna::findOrFail($id);
         $penggunas = $request->validated();
         // $penggunas['password'] = Hash::make($penggunas['password']);
-        $pengguna = Pengguna::findOrFail($id);
+        if($request->hasFile('file_upload')){
+            if($pengguna->file_upload && Storage::disk('public')->exists($pengguna->file_upload)){
+                Storage::disk('public')->delete($pengguna->file_upload);
+            }
+            $file = $request->file('file_upload');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $path = $file->storeAs('uploads', $filename, 'public');
+            $penggunas['file_upload'] = $path;
+        }
         $pengguna->update($penggunas);
         return redirect()->route('penggunas.index')->with('success', 'Data pengguna berhasil diubah');
     }

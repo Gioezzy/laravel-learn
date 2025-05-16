@@ -19,6 +19,16 @@
         <input type="email" name="email" value="{{ old('email', $pengguna->email) }}"><br>
         <label>Telepon:</label>
         <input type="text" name="phone" value="{{ old('phone', $pengguna->phone) }}"><br>
+        <label>File:</label>
+        @if ($pengguna->file_upload)
+            <img src="{{ asset('storage/' . $pengguna->file_upload) }}" alt="Foto pengguna" style="width: 200; height: auto;">
+        @endif
+        <label>Upload foto baru</label>
+        <input type="file" name="file_upload" accept=".pdf, .jpg, .png, .jpeg">
+        @error('file_upload')
+            <br><small style="color: red;">{{ $message }}</small>
+        @enderror
+        <br>
         <button type="submit">Update</button>
     </form>
 @endsection

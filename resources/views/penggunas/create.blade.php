@@ -56,7 +56,7 @@
         <br>
 
         <label>Upload File(PDF, JPG, PNG)</label>
-        <input type="file" name="file" accept=".pdf, .jpg, .png">
+        <input type="file" name="file_upload" accept=".pdf, .jpg, .png">
         @error('file')
             <br><small style="color: red;">{{ $message }}</small>
         @enderror

@@ -42,5 +42,5 @@ class PenggunaStoreRequest extends FormRequest
             'file_upload.required' => 'File upload harus diisi',
             'file_upload.max' => 'Ukuran file maksimal 2MB',
         ];
-    }
+    }   
 }
