@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\mahasiswa\MahasiswaController;
@@ -36,70 +37,72 @@ Route::get('/listmahasiswa', function () {
         'lutfi',
         'debby'
     ];
-    return view('akademik.mahasiswa', ['mhs' =>$arrmhs]);
+    return view('akademik.mahasiswa', ['mhs' => $arrmhs]);
 });
 
-Route::get('/listmahasiswaa', function(){
-    $mhs1 = "Qalbi";
-    $mhs2 = "Fajar";
-    $mhs3 = "Lutfi";
-    return view('akademik.mahasiswalist', compact('mhs1', 'mhs2', 'mhs3'));
+Route::get(
+    '/listmahasiswaa',
+    function () {
+        $mhs1 = "Qalbi";
+        $mhs2 = "Fajar";
+        $mhs3 = "Lutfi";
+        return view('akademik.mahasiswalist', compact('mhs1', 'mhs2', 'mhs3'));
     }
 );
 
-Route::get('/nilaimahasiswa', function(){
+Route::get('/nilaimahasiswa', function () {
     $nama = "Qalbi";
     $nim = "1905021001";
     $total_nilai = 90;
     return view('akademik.nilaimahasiswa', compact('nama', 'nim', 'total_nilai'));
 });
 
-Route::get('/nilaiswitch', function(){
+Route::get('/nilaiswitch', function () {
     $nama = "Qalbi";
     $nim = "1905021001";
     $total_nilai = 80;
     return view('akademik.nilaiswitch', compact('nama', 'nim', 'total_nilai'));
 });
 
-Route::get('/nilailoop', function(){
+Route::get('/nilailoop', function () {
     $nama = "Qalbi";
     $nim = "1905021001";
     $total_nilai = 80;
     return view('akademik.nilailoop
     ', compact('nama', 'nim', 'total_nilai'));
 });
-Route::get('/whileloop', function(){
+Route::get('/whileloop', function () {
     $nama = "Qalbi";
     $nim = "1905021001";
     $total_nilai = 80;
     return view('akademik.whileloop
     ', compact('nama', 'nim', 'total_nilai'));
 });
-Route::get('/foreach', function(){
+Route::get('/foreach', function () {
     $nama = "Qalbi";
     $nim = "1905021001";
     $total_nilai = [50, 60, 70, 80, 90];
     return view('akademik.foreach
     ', compact('nama', 'nim', 'total_nilai'));
 });
-Route::get('/forelse', function(){
+Route::get('/forelse', function () {
     $nama = "Qalbi";
     $nim = "1905021001";
     $total_nilai = [50, 60, 70, 80, 90];
     return view('akademik.foreach
     ', compact('nama', 'nim', 'total_nilai'));
 });
-Route::get('/continue', function(){
+Route::get('/continue', function () {
     $nama = "Qalbi";
     $nim = "1905021001";
-    $total_nilai = [20,80,34,70,90,35];
+    $total_nilai = [20, 80, 34, 70, 90, 35];
     return view('akademik.foreach
     ', compact('nama', 'nim', 'total_nilai'));
 });
-Route::get('/break', function(){
+Route::get('/break', function () {
     $nama = "Qalbi";
     $nim = "1905021001";
-    $total_nilai = [20,80,34,70,90,35];
+    $total_nilai = [20, 80, 34, 70, 90, 35];
     return view('akademik.foreach
     ', compact('nama', 'nim', 'total_nilai'));
 });
@@ -109,7 +112,7 @@ Route::get('/mahasiswati', function () {
     return view('akademik.mahasiswapnp', ['mhs' => $arrMhs]);
 })->name('mahasiswati');
 
-Route::get('/pnp/{jurusan}/{prodi}', function($jurusan, $prodi){
+Route::get('/pnp/{jurusan}/{prodi}', function ($jurusan, $prodi) {
     $data = [$jurusan, $prodi];
     return view('akademik.prodi')->with('prodi', $data);
 })->name('prodi');
@@ -132,8 +135,8 @@ Route::get('/pnp/{jurusan}/{prodi}', function($jurusan, $prodi){
 // });
 
 //Route with optional parameter
-Route::get('/hitungusia/{nama?}/{tahunlahir?}', function ($nama='qalbi', $tahun_lahir = null){
-    if ($tahun_lahir == null){
+Route::get('/hitungusia/{nama?}/{tahunlahir?}', function ($nama = 'qalbi', $tahun_lahir = null) {
+    if ($tahun_lahir == null) {
         return "<p style='color: red; fontsize: 45px;'>Hai $nama, tahun lahir tidak diketahui</p>";
     }
     $usia = date('Y') - $tahun_lahir;
@@ -141,7 +144,7 @@ Route::get('/hitungusia/{nama?}/{tahunlahir?}', function ($nama='qalbi', $tahun_
 });
 
 //Route with regular expression
-Route::get('/user/{id}', function ($id){
+Route::get('/user/{id}', function ($id) {
     return "<p>User admin dengan ID: $id</p>";
 })->where('id', '[0-9]+');
 
@@ -149,12 +152,12 @@ Route::get('/user/{id}', function ($id){
 Route::redirect('/admin', '/profile');
 
 //Route group
-Route::prefix('/login')->group(function(){
-    Route::get('/mahasiswa', function(){
-        return view('welcome') ;
+Route::prefix('/login')->group(function () {
+    Route::get('/mahasiswa', function () {
+        return view('welcome');
     });
 
-    Route::get('/admin', function(){
+    Route::get('/admin', function () {
         return view('welcome');
     });
 
@@ -164,23 +167,23 @@ Route::prefix('/login')->group(function(){
 });
 
 //route fallback
-Route::fallback(function(){
+Route::fallback(function () {
     return view('notfound');
 });
 
 //route post
-Route::post('/submit', function(){
+Route::post('/submit', function () {
     return 'Submitted';
 });
 
 //route put
-Route::put('/update/{$id}', function($id){
-    return 'update data for id' .$id;
+Route::put('/update/{$id}', function ($id) {
+    return 'update data for id' . $id;
 });
 
 //route delete
-Route::delete('/delete/{$id}', function($id){
-    return 'delete data for id' .$id;
+Route::delete('/delete/{$id}', function ($id) {
+    return 'delete data for id' . $id;
 });
 
 Route::get('/teknisi', [TeknisiController::class, 'index']);
@@ -192,20 +195,20 @@ Route::put('/teknisi/update/{id}', [TeknisiController::class, 'update']);
 Route::delete('/teknisi/destroy/{id}', [TeknisiController::class, 'destroy']);
 
 // Route::apiResource('users',UserController::class);
-Route::get('/insert-sql', [MahasiswaController::class,'insertSql']);
-Route::get('/insert-prepared', [MahasiswaController::class,'insertPrepared']);
-Route::get('/insert-binding', [MahasiswaController::class,'insertBinding']);
-Route::get('/update', [MahasiswaController::class,'update']);
-Route::get('/delete', [MahasiswaController::class,'delete']);
-Route::get('/select', [MahasiswaController::class,'select']);
-Route::get('/select-tampil', [MahasiswaController::class,'selectTampil']);
-Route::get('/select-view', [MahasiswaController::class,'selectView']);
-Route::get('/select-where', [MahasiswaController::class,'selectWhere']);
-Route::get('/statement', [MahasiswaController::class,'statement']);
+Route::get('/insert-sql', [MahasiswaController::class, 'insertSql']);
+Route::get('/insert-prepared', [MahasiswaController::class, 'insertPrepared']);
+Route::get('/insert-binding', [MahasiswaController::class, 'insertBinding']);
+Route::get('/update', [MahasiswaController::class, 'update']);
+Route::get('/delete', [MahasiswaController::class, 'delete']);
+Route::get('/select', [MahasiswaController::class, 'select']);
+Route::get('/select-tampil', [MahasiswaController::class, 'selectTampil']);
+Route::get('/select-view', [MahasiswaController::class, 'selectView']);
+Route::get('/select-where', [MahasiswaController::class, 'selectWhere']);
+Route::get('/statement', [MahasiswaController::class, 'statement']);
 
 
 //dosen
-Route::get('/cek-objek', [DosenController::class,'cekObjek']);
+Route::get('/cek-objek', [DosenController::class, 'cekObjek']);
 Route::get('/insert', [DosenController::class, 'insert']);
 Route::get('/mass-assignment', [DosenController::class, 'massAssignment']);
 Route::get('/updatedosen', [DosenController::class, 'updatedosen']);
@@ -229,20 +232,20 @@ Route::get('/restore', [DosenController::class, 'restore']);
 Route::get('/force-delete', [DosenController::class, 'forceDelete']);
 
 //query builder
-Route::get('/dosen', [DosenpnpController::class,'index'])->name('dosen.index');
-Route::get('/dosen/create', [DosenpnpController::class,'create'])->name('dosen.create');
-Route::post('/dosen', [DosenpnpController::class,'store'])->name('dosen.store');
-Route::get('/dosen/{id}/edit', [DosenpnpController::class,'edit'])->name('dosen.edit');
-Route::put('/dosen/{id}', [DosenpnpController::class,'update'])->name('dosen.update');
-Route::delete('/dosen/{id}', [DosenpnpController::class,'destroy'])->name('dosen.destroy');
+Route::get('/dosen', [DosenpnpController::class, 'index'])->name('dosen.index');
+Route::get('/dosen/create', [DosenpnpController::class, 'create'])->name('dosen.create');
+Route::post('/dosen', [DosenpnpController::class, 'store'])->name('dosen.store');
+Route::get('/dosen/{id}/edit', [DosenpnpController::class, 'edit'])->name('dosen.edit');
+Route::put('/dosen/{id}', [DosenpnpController::class, 'update'])->name('dosen.update');
+Route::delete('/dosen/{id}', [DosenpnpController::class, 'destroy'])->name('dosen.destroy');
 
 //eloquent ORM
-Route::get('/dosenti', [DosentiController::class,'index'])->name('dosenti.index');
-Route::get('/dosenti/create', [DosentiController::class,'create'])->name('dosenti.create');
-Route::post('/dosenti', [DosentiController::class,'store'])->name('dosenti.store');
-Route::get('/dosenti/{id}/edit', [DosentiController::class,'edit'])->name('dosenti.edit');
-Route::put('/dosenti/{id}', [DosentiController::class,'update'])->name('dosenti.update');
-Route::delete('/dosenti/{id}', [DosentiController::class,'destroy'])->name('dosenti.destroy');
+Route::get('/dosenti', [DosentiController::class, 'index'])->name('dosenti.index');
+Route::get('/dosenti/create', [DosentiController::class, 'create'])->name('dosenti.create');
+Route::post('/dosenti', [DosentiController::class, 'store'])->name('dosenti.store');
+Route::get('/dosenti/{id}/edit', [DosentiController::class, 'edit'])->name('dosenti.edit');
+Route::put('/dosenti/{id}', [DosentiController::class, 'update'])->name('dosenti.update');
+Route::delete('/dosenti/{id}', [DosentiController::class, 'destroy'])->name('dosenti.destroy');
 
 
 // Route::get('/pengguna/create', [PenggunaController::class, 'create'])->name('penggunas.create');
@@ -251,15 +254,19 @@ Route::delete('/dosenti/{id}', [DosentiController::class,'destroy'])->name('dose
 // Route::get('/pengguna/{id}/edit', [PenggunaController::class, 'edit'])->name('penggunas.edit');
 // Route::put('/pengguna/{id}', [PenggunaController::class, 'update'])->name('penggunas.update');
 // Route::delete('/pengguna/{id}', [PenggunaController::class, 'destroy'])->name('penggunas.destroy');
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::resource('penggunas', PenggunaController::class);
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
+
+    Route::middleware(['auth', 'admin'])->group(function () {
+        Route::resource('penggunas', PenggunaController::class);
+    });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
