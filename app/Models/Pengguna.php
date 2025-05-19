@@ -10,6 +10,7 @@ class Pengguna extends Model
         'name',
         'email',
         'password',
+        'role',
         'phone',
         'file_upload'
     ];
