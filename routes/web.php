@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\MahasiswaController;
@@ -12,9 +12,7 @@ use App\Http\Controllers\Dosen\DosenpnpController;
 use App\Http\Controllers\Dosen\DosentiController;
 use App\Http\Controllers\Pengguna\PenggunaController;
 use App\Http\Controllers\ProfileController;
-
-
-
+use App\Http\Controllers\SaleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -264,9 +262,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
-    Route::middleware(['auth', 'admin'])->group(function () {
+    Route::middleware(['auth','admin'])->group(function () {
         Route::resource('penggunas', PenggunaController::class);
+        Route::resource('books', BookController::class);
+        Route::resource('sales', SaleController::class);
     });
+
 });
 
 require __DIR__ . '/auth.php';
