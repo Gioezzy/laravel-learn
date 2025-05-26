@@ -12,6 +12,7 @@ use App\Http\Controllers\Dosen\DosenpnpController;
 use App\Http\Controllers\Dosen\DosentiController;
 use App\Http\Controllers\Pengguna\PenggunaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
 
 Route::get('/', function () {
@@ -262,12 +263,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
-    Route::middleware(['auth','admin'])->group(function () {
+    Route::middleware(['auth', 'admin'])->group(function () {
         Route::resource('penggunas', PenggunaController::class);
         Route::resource('books', BookController::class);
         Route::resource('sales', SaleController::class);
-    });
+        Route::get('/publishing-reports', [ReportController::class, 'publishingIndex'])->name('publishing.reports.index');
+        Route::get('/sales-reports', [ReportController::class, 'salesIndex'])->name('sales.reports.index');
+        Route::get('/laporan/penerbitan/pdf', [ReportController::class, 'exportPenerbitanPdf'])->name('laporan.penerbitan.pdf');
+        Route::get('/laporan/penjualan/pdf', [ReportController::class, 'exportPenjualanPdf'])->name('laporan.penjualan.pdf');
 
+
+        Route::get('/laporan/penerbitan/excel', [ReportController::class, 'exportPenerbitanExcel'])->name('laporan.penerbitan.excel');
+        Route::get('/laporan/penjualan/excel', [ReportController::class, 'exportPenjualanExcel'])->name('laporan.penjualan.excel');
+    });
 });
 
 require __DIR__ . '/auth.php';
