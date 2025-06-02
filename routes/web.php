@@ -13,6 +13,7 @@ use App\Http\Controllers\Dosen\DosentiController;
 use App\Http\Controllers\Pengguna\PenggunaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\ToDoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -266,6 +267,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('penggunas', PenggunaController::class);
         Route::resource('books', BookController::class);
         Route::resource('sales', SaleController::class);
+        Route::get('todos', [ToDoController::class,'index'])->name('todos.index');
+        Route::post('todos', [ToDoController::class,'store'])->name('todos.store');
+        Route::put('todos/{id}', [ToDoController::class,'update'])->name('todos.update');
+        Route::delete('todos/{id}', [ToDoController::class,'destroy'])->name('todos.destroy');
     });
 
 });
